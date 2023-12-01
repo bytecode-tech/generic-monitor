@@ -1,0 +1,4 @@
+Adafruit_Blinka==8.25.*
+adafruit_circuitpython_sht31d==2.3.*
+board==1.*
+fastapi==0.*.*

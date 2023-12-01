@@ -1,0 +1,31 @@
+[Unit]
+Description=api
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+DynamicUser=true
+
+WorkingDirectory=/home/pi/generic-gpio-mon
+PrivateTmp=true
+
+#EnvironmentFile=/.com/secrets/env
+
+ExecStart=/home/pi/.local/bin/uvicorn \
+        --proxy-headers \
+        --forwarded-allow-ips='*' \
+        --workers=4 \
+        --port=54748 \
+        --no-access-log \
+	--host 0.0.0.0 \
+	--reload \
+        main:app
+ExecReload=/bin/kill -HUP ${MAINPID}
+RestartSec=1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
